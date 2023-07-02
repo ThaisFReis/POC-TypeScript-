@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.createUser = void 0;
+exports.deleteUser = exports.updateUser = exports.getAllUsers = exports.createUser = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const users_service_1 = __importDefault(require("../services/users-service"));
 // Create a new user
@@ -24,6 +24,17 @@ async function createUser(req, res) {
     }
 }
 exports.createUser = createUser;
+// Get all users
+async function getAllUsers(req, res) {
+    try {
+        const users = await users_service_1.default.getAllUsers();
+        res.json(users);
+    }
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+exports.getAllUsers = getAllUsers;
 // Update a user
 async function updateUser(req, res) {
     const userId = parseInt(req.params.id);

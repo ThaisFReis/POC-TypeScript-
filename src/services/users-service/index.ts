@@ -32,6 +32,12 @@ export async function createUser({ email, name, password }: CreateUserParams): P
     return newUser;
 }
 
+// Get all users
+async function getAllUsers(): Promise<User[]> {
+    const users = await UserRepository.getAllUsers();
+    return users;
+}
+
 // Update a user by ID
 async function updateUser(userId: number, data: UpdateUserParams): Promise<User> {
     const user = await UserRepository.findUserById(userId);
@@ -45,6 +51,7 @@ async function updateUser(userId: number, data: UpdateUserParams): Promise<User>
 
 // Delete a user by ID
 async function deleteUser(userId: number): Promise<User> {
+
     const user = await UserRepository.findUserById(userId);
     if (!user) {
         throw new Error('User not found');
@@ -54,11 +61,13 @@ async function deleteUser(userId: number): Promise<User> {
     return deletedUser;
 }
 
+
 export type CreateUserParams = Pick<User, 'email' | 'name' | 'password'>;
 export type UpdateUserParams = Partial<CreateUserParams>;
 
 const UserService = {
     createUser,
+    getAllUsers,
     updateUser,
     deleteUser
 };

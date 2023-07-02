@@ -23,6 +23,11 @@ export async function Login(req: Request, res: Response) {
         return res.status(httpStatus.OK).json(user);
 
     } catch (error) {
+        // If the error is unthaorized, return 401 and the error message
+        if (error.message === 'Unauthorized') {
+            return res.status(httpStatus.UNAUTHORIZED).json("Invalid email or password");
+        }
+
         return res.status(httpStatus.BAD_REQUEST).json({ error: error.message });
     }
 }

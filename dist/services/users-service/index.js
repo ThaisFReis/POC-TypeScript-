@@ -30,6 +30,11 @@ async function createUser({ email, name, password }) {
     return newUser;
 }
 exports.createUser = createUser;
+// Get all users
+async function getAllUsers() {
+    const users = await user_repository_1.default.getAllUsers();
+    return users;
+}
 // Update a user by ID
 async function updateUser(userId, data) {
     const user = await user_repository_1.default.findUserById(userId);
@@ -50,6 +55,7 @@ async function deleteUser(userId) {
 }
 const UserService = {
     createUser,
+    getAllUsers,
     updateUser,
     deleteUser
 };

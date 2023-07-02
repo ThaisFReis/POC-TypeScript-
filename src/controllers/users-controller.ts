@@ -20,6 +20,16 @@ export async function createUser(req: Request, res: Response) {
     }
 }
 
+// Get all users
+export async function getAllUsers(req: Request, res: Response) {
+    try {
+        const users = await userService.getAllUsers();
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 // Update a user
 export async function updateUser(req: Request, res: Response) {
     const userId = parseInt(req.params.id);

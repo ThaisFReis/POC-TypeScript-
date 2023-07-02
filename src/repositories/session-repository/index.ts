@@ -12,7 +12,7 @@ export async function createSession(sessionData: Prisma.SessionCreateInput): Pro
 
 // Find a session by token
 async function findSessionByToken(token: string, select?: Prisma.SessionSelect) {
-    const session = await prisma.session.findUnique({
+    const session = await prisma.session.findFirst({
         where: {
             token,
         },
@@ -34,7 +34,7 @@ async function deleteSessionByToken(token: string) {
 const SessionRepository = {
     createSession,
     findSessionByToken,
-    deleteSessionByToken,
+    deleteSessionByToken
 };
 
 export default SessionRepository;

@@ -12,9 +12,14 @@ async function createUser(email, name, password) {
     });
     return user;
 }
+// Get all users
+async function getAllUsers() {
+    const users = await config_1.prisma.user.findMany();
+    return users;
+}
 // Find a user by email
 async function findUserByEmail(email) {
-    const user = await config_1.prisma.user.findUnique({
+    const user = await config_1.prisma.user.findFirst({
         where: {
             email,
         },
@@ -23,7 +28,7 @@ async function findUserByEmail(email) {
 }
 // Find a user by id
 async function findUserById(id) {
-    const user = await config_1.prisma.user.findUnique({
+    const user = await config_1.prisma.user.findFirst({
         where: {
             id,
         },
@@ -42,6 +47,11 @@ async function updateUserById(userId, data) {
 }
 // Delete a user by id
 async function deleteUserById(id) {
+    await config_1.prisma.session.deleteMany({
+        where: {
+            userId: id,
+        },
+    });
     const user = await config_1.prisma.user.delete({
         where: {
             id,
@@ -51,6 +61,7 @@ async function deleteUserById(id) {
 }
 const UserRepository = {
     createUser,
+    getAllUsers,
     findUserByEmail,
     findUserById,
     updateUserById,
